@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanmay Thakur | Senior Software Engineer & AI Architect</title>
+    <title>Tanmay Thakur | Senior Software Engineer & AI enthusiast & Researcher</title>
     <style>
         :root {
             --bg-color: #0a0a0a;
@@ -377,7 +377,6 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#ai-demo">AI Demo</a>
-        <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
     </div>
 </nav>
@@ -386,21 +385,18 @@
     <canvas id="canvas-container"></canvas>
     <div class="hero-content">
         <h1>Tanmay Thakur</h1>
-        <p class="subtitle">Senior Software Engineer & AI Architect</p>
+        <p class="subtitle">Senior Software Engineer & AI enthusiast & Researcher</p>
         <p style="margin-bottom: 2rem; color: #aaa;">Architecting intelligent systems and scalable solutions for the future.</p>
         <a href="#contact" class="cta-button">Get in Touch</a>
     </div>
 </div>
 
 <section id="about">
-    <h2>About Me</h2>
+    <h2>Professional Summary</h2>
     <div class="about-grid">
         <div class="about-text">
             <p>
-                I am a seasoned Software Engineer with over <strong>12+ years of experience</strong> in full-stack development and artificial intelligence. I specialize in building high-performance applications that leverage Machine Learning to solve real-world business problems.
-            </p>
-            <p>
-                From architecting cloud-native microservices to deploying Large Language Models (LLMs), I bring a depth of engineering rigor to every project. I am passionate about bridging the gap between theoretical AI research and production-ready software.
+                Senior Software Engineer and Researcher with over <strong>12+ years of experience</strong> specializing in the convergence of Artificial Intelligence, and Scalable Software Architecture. Proven track record in designing high-performance systems and improving the product lifecycle with AI applications.
             </p>
         </div>
         <div class="stats">
@@ -409,7 +405,7 @@
                 <span>Years Experience</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number">AI/ML</span>
+                <span class="stat-number">Software/AI/ML</span>
                 <span>Architecture</span>
             </div>
             <div class="stat-card">
@@ -427,15 +423,15 @@
 <section id="skills">
     <h2>Technical Arsenal</h2>
     <div class="skills-container">
+        <div class="skill-tag">Kotlin</div>
+        <div class="skill-tag">Java</div>
         <div class="skill-tag">Python</div>
         <div class="skill-tag">C++</div>
         <div class="skill-tag">Machine Learning</div>
         <div class="skill-tag">Deep Learning</div>
-        <div class="skill-tag">NLP & LLMs</div>
         <div class="skill-tag">Distributed Systems</div>
         <div class="skill-tag">React / Modern Web</div>
         <div class="skill-tag">Cloud Architecture (AWS/GCP)</div>
-        <div class="skill-tag">TensorFlow / PyTorch</div>
         <div class="skill-tag">System Design</div>
     </div>
 </section>
@@ -476,27 +472,6 @@
     </div>
 </section>
 
-<section id="projects">
-    <h2>Key Projects</h2>
-    <div class="project-card">
-        <div class="project-title">Distributed AI Inference Engine</div>
-        <div class="project-tech">Python • Kubernetes • TensorFlow Serving</div>
-        <p style="color: #aaa; font-size: 0.95rem;">Architected a scalable inference system capable of handling 10k+ requests per second with < 50ms latency. Implemented auto-scaling policies based on GPU utilization.</p>
-    </div>
-
-    <div class="project-card">
-        <div class="project-title">Real-time Fraud Detection System</div>
-        <div class="project-tech">Java • Kafka • Spark Streaming</div>
-        <p style="color: #aaa; font-size: 0.95rem;">Built a streaming pipeline to detect anomalies in financial transactions in real-time, reducing false positives by 40% using an ensemble ML model.</p>
-    </div>
-
-    <div class="project-card">
-        <div class="project-title">Intelligent Document Processing Platform</div>
-        <div class="project-tech">React • Python • OCR • NLP</div>
-        <p style="color: #aaa; font-size: 0.95rem;">Developed an end-to-end solution for automating data extraction from unstructured documents using custom NER models and computer vision.</p>
-    </div>
-</section>
-
 <section id="contact">
     <h2 style="text-align: center; display: block;">Let's Connect</h2>
     <p style="text-align: center; color: #888;">Open to new opportunities in Software Engineering and AI.</p>
@@ -509,6 +484,10 @@
         <a href="https://github.com/tanmatt" target="_blank" class="social-link">
             <i class="fab fa-github"></i>
             <span>GitHub</span>
+        </a>
+        <a href="https://scholar.google.com/citations?user=QIJYDioAAAAJ&hl=en" target="_blank" class="social-link">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Scholar</span>
         </a>
     </div>
 </section>
@@ -645,13 +624,23 @@
         const complexity = Math.min((words / 20) * 10, 10).toFixed(1);
 
         // Simple sentiment simulation
-        const positiveWords = ['good', 'great', 'love', 'excellent', 'amazing', 'scalable', 'robust', 'efficient'];
+        const positiveWords = ['good', 'great', 'love', 'excellent', 'amazing', 'scalable', 'robust', 'efficient', 'best'];
         const negativeWords = ['bad', 'slow', 'bug', 'error', 'fail', 'hard', 'complex'];
+        const negations = ['not', 'no', 'never', "n't", 'dont', 'cant', 'wont'];
 
         let score = 0;
-        text.toLowerCase().split(/\s+/).forEach(w => {
-            if (positiveWords.includes(w)) score++;
-            if (negativeWords.includes(w)) score--;
+        const tokenized = text.toLowerCase().match(/\b\w+\b/g) || [];
+        
+        tokenized.forEach((w, i) => {
+            let val = 0;
+            if (positiveWords.includes(w)) val = 1;
+            if (negativeWords.includes(w)) val = -1;
+            
+            // Check for negation in previous word
+            if (i > 0 && val !== 0 && negations.includes(tokenized[i-1])) {
+                val *= -1;
+            }
+            score += val;
         });
 
         let sentiment = 'Neutral';
