@@ -411,6 +411,51 @@
             color: #ccc;
         }
 
+        /* Market Pulse */
+        .trends-wrapper {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        #regulatory-feed {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            min-height: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .paper-card {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .paper-card:last-child {
+            border-bottom: none;
+        }
+
+        .paper-title {
+            display: block;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .paper-title:hover {
+            text-decoration: underline;
+        }
+
+        .paper-meta {
+            font-size: 0.8rem;
+            color: #70757a;
+            margin-top: 5px;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
@@ -432,6 +477,7 @@
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#skills">Expertise</a>
+        <a href="#market-pulse">Market Pulse</a>
         <a href="#contact">Connect</a>
     </div>
 </nav>
@@ -561,6 +607,26 @@
         <div class="skill-tag">Stakeholder Management</div>
         <div class="skill-tag">Compliance Frameworks</div>
     </div>
+</section>
+
+<section id="market-pulse">
+    <h2>Global Market Pulse: AI Regulation vs. Safety</h2>
+    <div class="trends-wrapper">
+        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3620_RC01/embed_loader.js"></script>
+        <script type="text/javascript">
+            trends.embed.renderExploreWidget("TIMESERIES", {
+              "comparisonItem":[{"keyword":"AI Regulation","geo":"","time":"today 12-m"},{"keyword":"AI Safety","geo":"","time":"today 12-m"}],
+              "category":0,
+              "property":""
+            }, {
+              "exploreQuery":"q=AI%20Regulation,AI%20Safety&date=today%2012-m",
+              "guestPath":"https://trends.google.com:443/trends/embed/"
+            });
+        </script>
+    </div>
+
+    <h2>Latest AI Governance & Policy Research</h2>
+    <div id="regulatory-feed">Loading live policy updates...</div>
 </section>
 
 
@@ -727,6 +793,41 @@
             }
         }, 2000); // Resume after 2 seconds of no scrolling
     });
+
+    // Fetches live data from arXiv specifically for "Computers and Society" (Policy/Compliance)
+    async function fetchRegulatoryData() {
+        const query = 'all:ai+governance+regulation+compliance';
+        const url = `https://export.arxiv.org/api/query?search_query=${query}&start=0&max_results=3&sortBy=submittedDate&sortOrder=descending`;
+
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(text, "text/xml");
+            const entries = xmlDoc.getElementsByTagName("entry");
+
+            let html = '';
+            for (let i = 0; i < entries.length; i++) {
+                const title = entries[i].getElementsByTagName("title")[0].textContent;
+                const link = entries[i].getElementsByTagName("id")[0].textContent;
+                const published = new Date(entries[i].getElementsByTagName("published")[0].textContent).toLocaleDateString();
+                const summary = entries[i].getElementsByTagName("summary")[0].textContent.substring(0, 140) + '...';
+
+                html += `
+                    <div class="paper-card">
+                        <a href="${link}" target="_blank" class="paper-title">${title}</a>
+                        <div class="paper-meta">Published: ${published} | Source: arXiv Regulatory Research</div>
+                        <div style="font-size: 0.9rem; margin-top:5px;">${summary}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('regulatory-feed').innerHTML = html;
+        } catch (error) {
+            document.getElementById('regulatory-feed').innerHTML = "Unable to load live feed at this time.";
+        }
+    }
+
+    fetchRegulatoryData();
 </script>
 </body>
 </html>
