@@ -610,21 +610,6 @@
 </section>
 
 <section id="market-pulse">
-    <h2>Global Market Pulse: AI Regulation vs. Safety</h2>
-    <div class="trends-wrapper">
-        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3620_RC01/embed_loader.js"></script>
-        <script type="text/javascript">
-            trends.embed.renderExploreWidget("TIMESERIES", {
-              "comparisonItem":[{"keyword":"AI Regulation","geo":"","time":"today 12-m"},{"keyword":"AI Safety","geo":"","time":"today 12-m"}],
-              "category":0,
-              "property":""
-            }, {
-              "exploreQuery":"q=AI%20Regulation,AI%20Safety&date=today%2012-m",
-              "guestPath":"https://trends.google.com:443/trends/embed/"
-            });
-        </script>
-    </div>
-
     <h2>Latest AI Governance & Policy Research</h2>
     <div id="regulatory-feed">Loading live policy updates...</div>
 </section>
@@ -797,7 +782,7 @@
     // Fetches live data from arXiv specifically for "Computers and Society" (Policy/Compliance)
     async function fetchRegulatoryData() {
         const query = 'all:ai+governance+regulation+compliance';
-        const url = `https://export.arxiv.org/api/query?search_query=${query}&start=0&max_results=3&sortBy=submittedDate&sortOrder=descending`;
+        const url = `https://cors-anywhere.herokuapp.com/https://export.arxiv.org/api/query?search_query=${query}&start=0&max_results=3&sortBy=submittedDate&sortOrder=descending`;
 
         try {
             const response = await fetch(url);
@@ -807,11 +792,13 @@
             const entries = xmlDoc.getElementsByTagName("entry");
 
             let html = '';
-            for (let i = 0; i < entries.length; i++) {
-                const title = entries[i].getElementsByTagName("title")[0].textContent;
-                const link = entries[i].getElementsByTagName("id")[0].textContent;
-                const published = new Date(entries[i].getElementsByTagName("published")[0].textContent).toLocaleDateString();
-                const summary = entries[i].getElementsByTagName("summary")[0].textContent.substring(0, 140) + '...';
+            for (let i = 0; i < Math.min(entries.length, 3); i++) {
+                const title = entries[i].getElementsByTagName("title")[0]?.textContent || 'No title';
+                const link = entries[i].getElementsByTagName("id")[0]?.textContent || '#';
+                const publishedElement = entries[i].getElementsByTagName("published")[0];
+                const published = publishedElement ? new Date(publishedElement.textContent).toLocaleDateString() : 'Unknown date';
+                const summaryElement = entries[i].getElementsByTagName("summary")[0];
+                const summary = summaryElement ? summaryElement.textContent.substring(0, 140) + '...' : 'No summary available';
 
                 html += `
                     <div class="paper-card">
@@ -823,7 +810,8 @@
             }
             document.getElementById('regulatory-feed').innerHTML = html;
         } catch (error) {
-            document.getElementById('regulatory-feed').innerHTML = "Unable to load live feed at this time.";
+            console.error('Error fetching arXiv data:', error);
+            document.getElementById('regulatory-feed').innerHTML = "Unable to load live feed at this time. Error: " + error.message;
         }
     }
 
