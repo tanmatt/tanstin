@@ -359,11 +359,76 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 80px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            border: 3px solid var(--bg-color);
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .period {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content p {
+            color: #ccc;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .demo-interface { grid-template-columns: 1fr; }
+            .timeline::before { left: 20px; }
+            .timeline-item { padding-left: 60px; }
+            .timeline-marker { left: 10px; }
         }
     </style>
     <!-- Font Awesome for Icons -->
@@ -375,6 +440,7 @@
     <a href="#" class="logo">TANMAY.</a>
     <div class="nav-links">
         <a href="#about">About</a>
+        <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
         <a href="#ai-demo">AI Demo</a>
         <a href="#contact">Contact</a>
@@ -415,6 +481,39 @@
             <div class="stat-card">
                 <span class="stat-number">R&D</span>
                 <span>Innovation</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="experience">
+    <h2>Career Journey</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h3>Senior Software Engineer</h3>
+                <p class="company">Google</p>
+                <p class="period">2020 - Present</p>
+                <p>Leading development of AI-powered systems and scalable architectures for next-generation products.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h3>Software Engineer</h3>
+                <p class="company">Amazon Web Services</p>
+                <p class="period">2015 - 2020</p>
+                <p>Developed cloud-native solutions and contributed to machine learning infrastructure improvements.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h3>Research Engineer</h3>
+                <p class="company">Tech Innovation Labs</p>
+                <p class="period">2010 - 2015</p>
+                <p>Conducted cutting-edge research in AI algorithms and published papers in top-tier conferences.</p>
             </div>
         </div>
     </div>
