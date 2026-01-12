@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanmay Thakur | Senior Software Engineer & AI Architect</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00f2ff;
+            --secondary-accent: #7000ff;
+            --card-bg: #161616;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, var(--accent-color), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-accent);
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* AI Demo Section */
+        .ai-demo-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .input-area textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            resize: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-area textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .analysis-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary-accent);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Projects */
+        .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-accent);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateX(10px);
+            background: #1a1a1a;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .project-tech {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-family: monospace;
+        }
+
+        /* Contact */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: var(--text-color);
+            font-size: 2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-link span {
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+
+        .social-link:hover span {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .demo-interface { grid-template-columns: 1fr; }
+        }
+    </style>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<nav>
+    <a href="#" class="logo">TANMAY.</a>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#ai-demo">AI Demo</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<div id="hero">
+    <canvas id="canvas-container"></canvas>
+    <div class="hero-content">
+        <h1>Tanmay Thakur</h1>
+        <p class="subtitle">Senior Software Engineer & AI Architect</p>
+        <p style="margin-bottom: 2rem; color: #aaa;">Architecting intelligent systems and scalable solutions for the future.</p>
+        <a href="#contact" class="cta-button">Get in Touch</a>
+    </div>
+</div>
+
+<section id="about">
+    <h2>About Me</h2>
+    <div class="about-grid">
+        <div class="about-text">
+            <p>
+                I am a seasoned Software Engineer with over <strong>12+ years of experience</strong> in full-stack development and artificial intelligence. I specialize in building high-performance applications that leverage Machine Learning to solve real-world business problems.
+            </p>
+            <p>
+                From architecting cloud-native microservices to deploying Large Language Models (LLMs), I bring a depth of engineering rigor to every project. I am passionate about bridging the gap between theoretical AI research and production-ready software.
+            </p>
+        </div>
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number">12+</span>
+                <span>Years Experience</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">AI/ML</span>
+                <span>Architecture</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">Full</span>
+                <span>Stack Engineering</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">R&D</span>
+                <span>Innovation</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <h2>Technical Arsenal</h2>
+    <div class="skills-container">
+        <div class="skill-tag">Python</div>
+        <div class="skill-tag">C++</div>
+        <div class="skill-tag">Machine Learning</div>
+        <div class="skill-tag">Deep Learning</div>
+        <div class="skill-tag">NLP & LLMs</div>
+        <div class="skill-tag">Distributed Systems</div>
+        <div class="skill-tag">React / Modern Web</div>
+        <div class="skill-tag">Cloud Architecture (AWS/GCP)</div>
+        <div class="skill-tag">TensorFlow / PyTorch</div>
+        <div class="skill-tag">System Design</div>
+    </div>
+</section>
+
+<section id="ai-demo">
+    <h2>Interactive AI Module</h2>
+    <p style="margin-bottom: 2rem; color: #888;">Experience a real-time simulation of my Natural Language Processing capabilities.</p>
+
+    <div class="ai-demo-container">
+        <div class="demo-interface">
+            <div class="input-area">
+                <textarea id="ai-input" placeholder="Type something here to analyze sentiment and complexity... (e.g., 'I love building scalable AI systems!')"></textarea>
+            </div>
+            <div class="analysis-panel">
+                <div class="metric-card">
+                    <span>Sentiment Score</span>
+                    <span class="metric-value" id="sentiment-score">Neutral</span>
+                </div>
+                <div class="metric-card">
+                    <span>Complexity Index</span>
+                    <span class="metric-value" id="complexity-score">0.0</span>
+                </div>
+                <div class="metric-card" style="display:block;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>Processing Confidence</span>
+                        <span class="metric-value" id="confidence-val">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="confidence-bar"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <span>Detected Keywords</span>
+                    <span class="metric-value" id="keywords-val" style="font-size: 0.8rem;">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Key Projects</h2>
+    <div class="project-card">
+        <div class="project-title">Distributed AI Inference Engine</div>
+        <div class="project-tech">Python • Kubernetes • TensorFlow Serving</div>
+        <p style="color: #aaa; font-size: 0.95rem;">Architected a scalable inference system capable of handling 10k+ requests per second with < 50ms latency. Implemented auto-scaling policies based on GPU utilization.</p>
+    </div>
+
+    <div class="project-card">
+        <div class="project-title">Real-time Fraud Detection System</div>
+        <div class="project-tech">Java • Kafka • Spark Streaming</div>
+        <p style="color: #aaa; font-size: 0.95rem;">Built a streaming pipeline to detect anomalies in financial transactions in real-time, reducing false positives by 40% using an ensemble ML model.</p>
+    </div>
+
+    <div class="project-card">
+        <div class="project-title">Intelligent Document Processing Platform</div>
+        <div class="project-tech">React • Python • OCR • NLP</div>
+        <p style="color: #aaa; font-size: 0.95rem;">Developed an end-to-end solution for automating data extraction from unstructured documents using custom NER models and computer vision.</p>
+    </div>
+</section>
+
+<section id="contact">
+    <h2 style="text-align: center; display: block;">Let's Connect</h2>
+    <p style="text-align: center; color: #888;">Open to new opportunities in Software Engineering and AI.</p>
+
+    <div class="contact-links">
+        <a href="https://www.linkedin.com/in/tanmat/" target="_blank" class="social-link">
+            <i class="fab fa-linkedin"></i>
+            <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/tanmatt" target="_blank" class="social-link">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+        </a>
+    </div>
+</section>
+
+<script>
+    // Simple Particle Animation for AI Flavor
+    const canvas = document.getElementById('canvas-container');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener('mousemove', (event) => {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    });
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2;
+            this.baseX = this.x;
+            this.baseY = this.y;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+            // Mouse interaction
+            if (mouse.x != null) {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const force = (mouse.radius - distance) / mouse.radius;
+                    const directionX = forceDirectionX * force * 3;
+                    const directionY = forceDirectionY * force * 3;
+                    this.x -= directionX;
+                    this.y -= directionY;
+                }
+            }
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.5)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        // Draw connections
+        ctx.strokeStyle = 'rgba(0, 242, 255, 0.05)';
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+            // Connect to mouse
+            if (mouse.x != null) {
+                const dx = particles[i].x - mouse.x;
+                const dy = particles[i].y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(0, 242, 255, 0.2)';
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                    ctx.strokeStyle = 'rgba(0, 242, 255, 0.05)';
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    // AI Demo Logic
+    const input = document.getElementById('ai-input');
+    const sentimentEl = document.getElementById('sentiment-score');
+    const complexityEl = document.getElementById('complexity-score');
+    const confidenceBar = document.getElementById('confidence-bar');
+    const confidenceVal = document.getElementById('confidence-val');
+    const keywordsEl = document.getElementById('keywords-val');
+
+    input.addEventListener('input', (e) => {
+        const text = e.target.value;
+        if (!text) {
+            sentimentEl.innerText = 'Neutral';
+            complexityEl.innerText = '0.0';
+            confidenceBar.style.width = '0%';
+            confidenceVal.innerText = '0%';
+            keywordsEl.innerText = '-';
+            return;
+        }
+
+        // Simulate Analysis
+        const words = text.split(' ').length;
+        const complexity = Math.min((words / 20) * 10, 10).toFixed(1);
+
+        // Simple sentiment simulation
+        const positiveWords = ['good', 'great', 'love', 'excellent', 'amazing', 'scalable', 'robust', 'efficient'];
+        const negativeWords = ['bad', 'slow', 'bug', 'error', 'fail', 'hard', 'complex'];
+
+        let score = 0;
+        text.toLowerCase().split(/\s+/).forEach(w => {
+            if (positiveWords.includes(w)) score++;
+            if (negativeWords.includes(w)) score--;
+        });
+
+        let sentiment = 'Neutral';
+        if (score > 0) sentiment = 'Positive';
+        if (score < 0) sentiment = 'Negative';
+
+        // Update UI
+        sentimentEl.innerText = sentiment;
+        sentimentEl.style.color = sentiment === 'Positive' ? '#00ff88' : (sentiment === 'Negative' ? '#ff0055' : 'var(--accent-color)');
+
+        complexityEl.innerText = complexity;
+
+        const confidence = Math.min(85 + (words * 2), 99);
+        confidenceBar.style.width = `${confidence}%`;
+        confidenceVal.innerText = `${confidence}%`;
+
+        // Extract keywords (long words)
+        const keywords = text.split(/\s+/).filter(w => w.length > 6).slice(0, 3).join(', ');
+        keywordsEl.innerText = keywords || 'Processing...';
+    });
+</script>
+</body>
+</html>
