@@ -1,5 +1,4 @@
 User-agent: *
-Crawl-delay: 5
 Disallow: /private/
 
 User-agent: Google-adstxt
